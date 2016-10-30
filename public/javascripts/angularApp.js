@@ -111,13 +111,13 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 		});
 	};
 
-	auth.login = function() {
+	auth.logIn = function() {
 		return $http.post('/login', user).success(function(data) {
 			auth.saveToken(data.token);
 		});
 	};
 
-	auth.logout = function() {
+	auth.logOut = function() {
 		$window.localStorage.removeItem('flapper-news-token');
 	};
 
@@ -145,6 +145,31 @@ function($scope, posts) {
 	$scope.incrementUpvotes = function(post) {
 		posts.upvote(post);
 	};
+}]);
+
+app.controller('AuthCtrl', [
+'$scope',
+'$state',
+'auth',
+function($scope, $state, auth) {
+	$scope.user = {};
+
+	$scope.register = function() {
+		auth.register($scope.user).error(function(error) {
+			$scope.error = error;
+		}).then(function() {
+			$state.go('home');
+		});
+	};
+
+	$scope.logIn = function() {
+		auth.logIn($scope.user).error(function(error) {
+			$scope.error = error;
+		}).then(function() {
+			$state.go('home');
+		});
+	};
+	
 }]);
 
 app.controller('PostsCtrl', [
