@@ -5,9 +5,9 @@ var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 
 /* GET home page. */
-//router.get('/', function(req, res, next) {
-//  res.render('index', { title: 'Express' });
-//});
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
 
 router.get('/posts', function(req, res, next) {
 	Post.find(function(err, posts) {
@@ -66,7 +66,6 @@ router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
 		res.json(comment);
 	});
 });
-
 
 // PARAM ROUTES
 router.param('post', function(req, res, next, id) {
